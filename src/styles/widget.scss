@@ -1,0 +1,100 @@
+@keyframes slideInUp {
+  from {
+    transform: translate3d(0, 100%, 0);
+    display: inherit;
+    visibility: visible;
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes slideOutDown {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    display: none;
+    visibility: hidden;
+    transform: translate3d(0, 100%, 0);
+  }
+}
+
+.docked-widget {
+  position: fixed;
+  bottom: 0px;
+  right: 10px;
+  width: 200px;
+  z-index: 9999;
+}
+
+.dock {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  width: 180px;
+  border: 1px solid grey;
+  background: white;
+}
+
+
+.widget {
+  width: 200px;
+  border: 1px solid grey;
+  border-bottom: none;
+  animation-duration: 0.2s;
+  animation-fill-mode: forwards;
+
+  &-entering {
+    animation-name: slideInUp;
+  }
+  &-entered {
+    display: inherit;
+    visibility: visible;
+  }
+  &-exiting {
+    animation-name: slideOutDown;
+  }
+  &-exited {
+    display: none;
+    visibility: hidden;
+  }
+
+  &-header {
+    height: 30px;
+    line-height: 30px;
+    background: lightgrey;
+    color: grey;
+    padding-left: 10px;
+
+    display: flex;
+    align-items: stretch;
+
+    &-title {
+      display: flex;
+      flex-grow: 1;
+    }
+
+    &-icon {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: .75rem;
+    }
+  }
+  &-body {
+    background: white;
+    padding: 10px;
+    height: 150px;
+  }
+  &-footer {
+    background: green;
+    line-height: 30px;
+    padding-left: 10px;
+  }
+}
