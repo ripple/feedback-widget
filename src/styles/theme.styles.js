@@ -53,6 +53,7 @@ export default {
           fontWeight: 'bold',
           fontSize: 15,
           background: '#F5F7F9',
+          paddingRight: 20,
         },
         step2header: {
           color: '#000000',
@@ -256,6 +257,7 @@ export default {
           fontWeight: 'bold',
           fontSize: 15,
           background: '#F5F7F9',
+          paddingRight: 20,
         },
         step2header: {
           color: '#000000',

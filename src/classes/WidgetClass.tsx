@@ -1,70 +1,46 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Widget from '../components/WidgetComponent';
+import { Widget } from '../components/WidgetComponent';
 import { Analytics } from 'analytics';
 import googleTagManager from '@analytics/google-tag-manager';
 import googleAnalytics from '@analytics/google-analytics';
-import defaultWidgetProps from '../data/defaultWidgetProps'
-
-// const defaultConfig = {
-//   style: {
-//     primaryColor: 'red',
-//     secondaryColor: 'green'
-//   }
-// }
-
-// let defaultWidgetProps = {
-//   theme: 'ripplex',
-//   opened: true,
-//   parentElement: '#root',
-//   currentPath: window.location.pathname,
-//   mounted: false,
-//   analytics: null,
-//   analyticsConfig: null,
-//   analyticsAppName: 'ripple-widget'
-// }
+import defaultWidgetProps from '../data/defaultWidgetProps';
 
 // ======================== //
 //                          //
-//  RippleWidget: Class
+//  WidgetClass
 //                          //
 // ======================== //
-export default class RippleWidget {
+ export default class WidgetClass {
 
   // ------------------------------ //
   //  Class Types
   // ------------------------------ //
   props: {
-    analytics: any
-    analyticsAppName: string
+    analyticsName: string
     analyticsConfig: Array<{
       name: string
       id: string
     }>
     currentPath: string
     opened: boolean
-    parentElement: string
+    parentElement?: string
     steps: Array<any>  // TODO: Specify array content
     theme: string
   }
-  component: any // TODO: Lookup React Component syntax
+  component: any // TODO: Lookup React Component syntax instead of 'any'
   el?: HTMLElement
 
   // ------------------------------ //
   //  Constructor
   // ------------------------------ //
   constructor(options, steps) {
-    this.props = {...defaultWidgetProps, ...options, steps}
-    this.el
-    this.component
+    this.props = { ...defaultWidgetProps, ...options, steps };
+    this.el;
+    this.component;
 
-    // ----- Init ----- //
+    // ----- Start Init() ----- //
     this.init()
-  }
-
-  // TODO: handle widget submit. Acommodate custom submit functions being passed in props
-  handleWidgetSubmit(abc) {
-    console.log('handleWidgetSubmit abc: ', abc)
   }
 
   // ------------------------------ //
@@ -72,21 +48,22 @@ export default class RippleWidget {
   // ------------------------------ //
   init() {
 
-    // Setup Analytics Config (Google Analytics, Tag Manager, etc...)
-    if (this.props.analyticsConfig) {
-      this.connectAnalytics()
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    // The React implementation (aka NOT vanilla JS) will pass itself as the
+    // component and therefor not need to be reinstantiated or rendered.
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    if (!this.component) {
+
+      // Create React <Widget />
+      this.component = <Widget {...this.props} />
+
+      // Call render when ready
+      if (document.readyState === 'complete') {
+        this.render();
+      } else {
+        window.addEventListener('load', () => this.render());
+      }
     }
-
-    // Create React <Widget />
-    this.component = <Widget {...this.props} onSubmit={this.handleWidgetSubmit} />;
-
-    // Call render when ready
-    if (document.readyState === 'complete') {
-      this.render();
-    } else {
-      window.addEventListener('load', () => this.render());
-    }
-
   }
 
   // ------------------------------ //
@@ -95,19 +72,22 @@ export default class RippleWidget {
   render() {
     if (this.el) throw new Error('Widget is already rendered.');
 
-    // Create HTML <element>
-    const el = document.createElement('div');
-    el.setAttribute('class', 'cleanslate');
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    // Determine target element for rendering the <Widget> component.
+    // Default to '#root' but can be overwritten by 'parentElement' prop.
+    // TODO: Test the parentElement implementation on a page with lots of HTML.
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    let el = (document.getElementById('root') as HTMLElement)
+    const parentElement = this.props.parentElement
 
-    // Insert the widget inside the parent element if it was defined,
-    // otherwise default to <body>
-    if (this.props.parentElement) {
-      const selector = document.querySelector(this.props.parentElement)
-      if (selector) selector.appendChild(el)
-      else throw new Error(`${this.props.parentElement} is undefined.`)
-    }
-    else {
-      document.body.appendChild(el);
+    if (parentElement) {
+      const selector = (document.querySelector(parentElement) as HTMLElement)
+      if (!selector) {
+        throw new Error(`${parentElement} is undefined.`)
+      }
+      else if (selector && el) {
+        el = selector
+      }
     }
 
     // Render React <Widget />
@@ -120,11 +100,11 @@ export default class RippleWidget {
   // ------------------------------ //
   //  Connect Analytics
   // ------------------------------ //
-  connectAnalytics() {
+  static connectAnalytics(analyticsConfig, analyticsName) {
 
     // Format analytics config to work with 'analytics' node package. 
     const plugins: any[] = [];
-    this.props.analyticsConfig.forEach(source => {
+    analyticsConfig.forEach(source => {
       switch (source.name) {
         case 'ga':
           plugins.push(googleAnalytics({ trackingId: source.id }))
@@ -136,9 +116,9 @@ export default class RippleWidget {
     })
 
     // Init 'analytics' node package
-    this.props.analytics = Analytics({
+    return Analytics({
       debug: true,
-      app: this.props.analyticsAppName,
+      app: analyticsName,
       plugins,
     });
 
@@ -147,127 +127,22 @@ export default class RippleWidget {
   // ------------------------------ //
   //  Track
   // ------------------------------ //
-  track(eventName, eventLabel) {
-    console.log('| TRACK EVENT |')
+  static track(analytics, eventName, eventValue) {
     const path = window.location.pathname
-    this.props.analytics.track(eventName, {
+    analytics.track(eventName, {
       category: path,
-      label: eventLabel
+      label: eventValue
     })
   }
 
 }
 
-
 // ------------------------------ //
-//  window.RippleWidget
+//  window.WidgetClass
 // ------------------------------ //
 declare global {
   interface Window {
-    RippleWidget: any
+    WidgetClass: any
   }
 }
-window.RippleWidget = RippleWidget
-
-
-// ------------------------------ //
-//  EmbeddableWidgetMountProps
-// ------------------------------ //
-// interface EmbeddableWidgetMountProps {
-//   parentElement : string
-//   [key:string] : any
-// }
-
-
-
-
-
-
-
-
-
-
-// class Greeter {
-//   greeting: string;
-
-//   constructor(message: string) {
-//     this.greeting = message;
-//   }
-
-//   greet() {
-//     return "Hello, " + this.greeting;
-//   }
-// }
-
-// declare global {
-//   interface Window {
-//       Greeter: any
-//   }
-// }
-
-// window.Greeter = Greeter
-
-// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= //
-
-//window.greeter = new Greeter("world");
-
-
-// class App extends React.Component<{}, {}> {
-//   render() {
-//     return (
-//       <div className="app cleanslate">
-//         Hi
-//       </div>
-//     );
-//   }
-// }
-
-// render(<App />, document.getElementById('root'));
-
-
-
-
-
-
-// function App() {
-//   console.log('Inside <App />')
-//   return (
-//     <>
-//       Hi
-//     </>
-//   )
-// }
-
-// const dom = document.getElementById('root')
-// console.log('dom: ', dom)
-
-// ReactDOM.render(
-//   <App />,
-//   document.getElementById('root')
-// )
-
-
-
-
-
-
-
-
-// import * as React from 'react';
-// import { render } from 'react-dom';
-// import FeedbackWidget from './feedbackWidget';
-
-
-// // This is not used or only used for the widget.js file?  But nothing uses that.
-// // eslint-disable-next-line react/prefer-stateless-function
-// class App extends React.Component<{}, {}> {
-//   render() {
-//     return (
-//       <div className="app cleanslate">
-//         <FeedbackWidget theme="paystring" />
-//       </div>
-//     );
-//   }
-// }
-
-// render(<App />, document.getElementById('content'));
+window.WidgetClass = WidgetClass

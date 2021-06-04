@@ -108,7 +108,7 @@ module.exports = [
   
   // ========================================================= //
   //
-  //  generated file: ripple-widget.min.js
+  //  Generated file: ripple-widget.min.js
   //
   //  The following file is generated automatically anytime
   //  another file inside this repo is saved. (make sure the
@@ -131,7 +131,6 @@ module.exports = [
     },
     devtool: 'source-map',
   },
-
   {
     ...defaultConfig,
     entry: './src/components/MicroReactApp.js',
@@ -141,62 +140,5 @@ module.exports = [
       filename: 'ripple-widget.react-example.js',
     },
     devtool: 'source-map',
-  },
-
-//   {
-//     ...defaultConfig,
-//     entry: './src/components/embeddable-widget.js',
-//     output: {
-//       path: distDir,
-//       library: 'EmbeddableWidget',
-//       publicPath: '/',
-//       filename: 'embeddable-widget.js',
-//     },
-//     devtool: 'source-map',
-//   },
-//   {
-//     ...defaultConfig,
-//     entry: './src/components/custom-embeddable.js',
-//     output: {
-//       path: distDir,
-//       library: 'EmbeddableWidget',
-//       publicPath: '/',
-//       filename: 'custom-widget.js',
-//     },
-//     devtool: 'source-map',
-//   },
-//   {
-//     ...defaultConfig,
-//     entry: './src/components/custom-embeddable-playground.js',
-//     output: {
-//       path: distDir,
-//       library: 'EmbeddableWidget',
-//       publicPath: '/',
-//       filename: 'custom-widget-playground.js',
-//     },
-//     devtool: 'source-map',
-//   },
+  }
 ];
-
-// module.exports = [{
-//   ...defaultConfig,
-//   entry: './src/outputs/embeddable-widget.js',
-//   output: {
-//     path: distDir,
-//     publicPath: '/',
-//     filename: 'widget.js',
-//     library: 'EmbeddableWidget',
-//     libraryExport: 'default',
-//     libraryTarget: 'window',
-//   },
-// },
-// {
-//   ...defaultConfig,
-//   entry: './src/outputs/bookmarklet.js',
-//   output: {
-//     path: distDir,
-//     publicPath: '/',
-//     filename: 'bookmarklet.js',
-//   },
-// }
-// ];

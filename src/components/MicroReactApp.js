@@ -1,6 +1,42 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Widget from './WidgetComponent.js'; 
+import { Widget } from './WidgetComponent';
+
+// ---------------------------- //
+//  Example Component for the
+//  React implementation.
+// ---------------------------- //
+const ExampleComponent = () => <h1>Example Component</h1>;
+
+// ----- Example Steps ----- //
+const defaultReactExampleSteps = [
+  { component: ExampleComponent },
+  {
+    form: {
+      type: 'object',
+      properties: {
+        firstName: { type: 'string' },
+        lastName: { type: 'string' },
+        workExperience: {
+          description: 'Work experience in years',
+          type: 'integer',
+          minimum: 0,
+          maximum: 100,
+        },
+      },
+      required: ['firstName'],
+    },
+  },
+  {
+    form: {
+      type: 'object',
+      properties: {
+        message: { type: 'string' },
+      },
+      required: ['message'],
+    },
+  },
+];
 
 // =============================================== //
 //
@@ -10,39 +46,36 @@ import Widget from './WidgetComponent.js';
 //  out '/public/example-vanilla-js.html' instead.
 //
 // =============================================== //
-const App = () => {
-  return (
-    <>
-      <h1>Micro React App.</h1>
-      <Widget />
-    </>
-  )
-}
+const App = (props) => (
+  <>
+    <h1>Micro React App.</h1>
+    <Widget {...props} />
+  </>
+);
 
 // ================================================ //
 //
 //  This class is NOT a necessary part of any other
 //  React implementation and serves only as a work
 //  around for this repository's webpack config. It
-//  allows us to test the React implementation in 
+//  allows us to test the React implementation in
 //  real-time without having to import directly into
-//  a different seperate project.
+//  a seperate project.
 //
 // ================================================ //
 export default class MicroReactApp {
-
-  constructor() {
-    this.init()
+  constructor(props) {
+    props.steps = props.steps || defaultReactExampleSteps;
+    this.props = props;
+    this.init();
   }
 
   init() {
-    console.log('start')
     ReactDOM.render(
-      <App />,
-      document.getElementById('root')
-    )
+      <App {...this.props} />,
+      document.getElementById('root'),
+    );
   }
-
 }
 
 window.MicroReactApp = MicroReactApp;

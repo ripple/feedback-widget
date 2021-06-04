@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Ripple Widget</title>
+</head>
+<script src="./ripple-widget.react-example.js"></script>
+
+<body>
+  <div id="root"></div>
+  <script>
+
+    // ----------------------------------------------- //
+    // Init "micro react app" for testing purposes.
+    // This code is NOT a part of the normal React
+    // implementation and serves only as a local
+    // environment for testing changes to the React
+    // module in real time.
+    // ----------------------------------------------- //
+    const steps = [
+      {
+        form: {
+          type: 'object',
+          properties: {
+            firstName: { type: 'string' },
+            lastName: { type: 'string' },
+            workExperience: {
+              description: 'Work experience in years',
+              type: 'integer',
+              minimum: 0,
+              maximum: 100,
+            },
+          },
+          required: ['firstName'],
+        }
+      },
+      {
+        form: {
+          type: 'object',
+          properties: {
+            message: { type: 'string' },
+          },
+          required: ['message'],
+        }
+      }
+    ];
+
+    const options = {
+      theme: 'xrpl',
+      analyticsConfig: [
+        { name: 'ga', id: 'UA-90187608-2' },
+        //{ name: 'gtm', id: 'GTM-THHW334' },
+      ],
+      onSubmit: (stepProps) => {
+        console.log('%cMy Custom Step. stepProps: ', 'color: red;', stepProps);
+      },
+      steps
+    };
+    const r = new MicroReactApp(options);
+  </script>
+</body>
+
+</html>
