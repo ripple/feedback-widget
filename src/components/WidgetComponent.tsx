@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Steps, Step } from 'react-step-builder';
 import config from '../styles/theme.styles';
 import StepComponent from './StepComponent';
@@ -7,6 +7,15 @@ import { DefaultStepOne, DefaultStepTwo } from './DefaultSteps';
 import WidgetClass from '../classes/WidgetClass';
 import '../styles/widget.scss';
 
+// ------------------------------ //
+//  Widget Types
+// ------------------------------ //
+// TODO: expand on this
+type WidgetProps = {
+  widgetProps: any,
+  theme: any,
+}
+
 // ########################## //
 //                            //
 //                            //
@@ -14,8 +23,8 @@ import '../styles/widget.scss';
 //                            //
 //                            //
 // ########################## //
-const Widget = (widgetProps) => {
-  // ===================== //
+const Widget = (widgetProps : WidgetProps) => {
+  // ===================== // 
   //  State
   // ===================== //
   const [props, setProps] = useState({ ...defaultWidgetProps, ...widgetProps });
@@ -23,12 +32,8 @@ const Widget = (widgetProps) => {
   const [analytics, setAnalytics] = useState(null);
   const [isOpen, setIsOpen] = useState(true);
   const [openAnimation, setOpenAnimation] = useState('entering');
-
-  // ===================== //
-  //  Vars
-  // ===================== //
-  const cssContainer = props.themeValues?.container;
-  const cssPosition = config.themes[props.theme].position;
+  const [themeName, setThemeName] = useState(widgetProps?.theme);
+  const [themeValues, setThemeValues] = useState(config.themes[themeName].styles)
 
   // ===================== //
   //  Events
@@ -38,21 +43,20 @@ const Widget = (widgetProps) => {
     setIsOpen(false);
   };
 
-  // ===================== //
-  //  Init
-  // ===================== //
-  useEffect(() => {
-    // ----- Insert Theme Values ----- //
-    const themeValues = config.themes[props.theme].styles;
-
-    setProps((prevState) => {
-      const newState = prevState;
-      newState.themeValues = themeValues;
-      return newState;
-    });
+  // - - - - - - - - - - - - - - - - //
+  //  fn: Init
+  // - - - - - - - - - - - - - - - - //
+  const init = function init() {
+    
+    // TODO: NEAL THIS PROBABLY IS IRRELEVANT NOW. but double check...
+    // setProps((prevState) => {
+    //   const newState = prevState;
+    //   newState.themeValues = themeValues;
+    //   return newState;
+    // });
 
     // ----- Insert Default Step ----- //
-    if (!props.steps) {
+    if (!props.steps || props.steps.length <= 0) {
       const defaultSteps = [
         { component: DefaultStepOne },
         { component: DefaultStepTwo },
@@ -60,25 +64,48 @@ const Widget = (widgetProps) => {
 
       setProps((prevState) => {
         const newState = prevState;
-        newState.steps = defaultSteps;
+        newState.steps = defaultSteps as any;
         return newState;
       });
     }
 
     // ----- Connect Analytics ----- //
     if (props.analyticsConfig) {
-      setAnalytics(WidgetClass.connectAnalytics(props.analyticsConfig, props.analyticsName));
+      setAnalytics(WidgetClass.connectAnalytics(props.analyticsConfig, props.analyticsName) as any);
     }
 
     // ----- Set Ready State ----- //
     setReady(true);
-  }, []);
+  }
 
+  // - - - - - - - - - - - - - - - - //
+  //  fn: Update Theme
+  // - - - - - - - - - - - - - - - - //
+  const updateTheme = function updateTheme() {
+    setThemeName(widgetProps.theme);
+    setThemeValues(config.themes[widgetProps.theme].styles);
+  }
+
+  // ===================== //
+  //  Hooks
+  // ===================== //
+  useEffect(init, []);
+  useEffect(updateTheme, [widgetProps])
+
+  // ===================== //
+  //  JSX
+  // ===================== //
   return (
     <>
       { ready ?
         <div className="cleanslate">
-          <div style={cssContainer} className={`widget docked-widget widget-${openAnimation} docked-widget-${cssPosition}`}>
+          <div style={themeValues?.container} className={`
+            ${themeName}
+            widget
+            docked-widget
+            widget-${openAnimation}
+            docked-widget-${config.themes[themeName].position}
+            `}>
             <div className={`widget widget-${isOpen}`}>
               <div><button type="button" id="closeFeedback" onClick={() => clickOnClose()}>X</button></div>
               <Steps>
@@ -86,9 +113,9 @@ const Widget = (widgetProps) => {
                   return (
                     <Step
                       key={idx}
-                      component={StepComponent}
+                      component={StepComponent as FC}
                       stepData={step}
-                      themeValues={props.themeValues}
+                      themeValues={themeValues}
                       onSubmit={props.onSubmit}
                       handleClose={clickOnClose}
                       currentPath={props.currentPath}

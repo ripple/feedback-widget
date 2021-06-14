@@ -23,10 +23,10 @@ import defaultWidgetProps from '../data/defaultWidgetProps';
       id: string
     }>
     currentPath: string
-    opened: boolean
     parentElement?: string
     steps: Array<any>  // TODO: Specify array content
     theme: string
+    widgetProps: any
   }
   component: any // TODO: Lookup React Component syntax instead of 'any'
   el?: HTMLElement
@@ -34,8 +34,8 @@ import defaultWidgetProps from '../data/defaultWidgetProps';
   // ------------------------------ //
   //  Constructor
   // ------------------------------ //
-  constructor(options, steps) {
-    this.props = { ...defaultWidgetProps, ...options, steps };
+  constructor(options) {
+    this.props = { ...defaultWidgetProps, ...options};
     this.el;
     this.component;
 

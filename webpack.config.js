@@ -108,7 +108,7 @@ module.exports = [
   
   // ========================================================= //
   //
-  //  Generated file: ripple-widget.min.js
+  //  Generated file: feedback-widget.js
   //
   //  The following file is generated automatically anytime
   //  another file inside this repo is saved. (make sure the
@@ -117,7 +117,7 @@ module.exports = [
   //  Static html files inside `/public` load said generated
   //  file even though you can't visibly see it in the repo.
   //
-  //  To see a built version of 'ripple-widget.min.js' either
+  //  To see a built version of 'feedback-widget.js' either
   //  load the source code from the browser dev tools or run
   //  `npm run build` to find it in the '/dist' folder.
   // ========================================================= //
@@ -127,17 +127,17 @@ module.exports = [
     output: {
       path: distDir,
       publicPath: '/',
-      filename: 'ripple-widget.min.js',
+      filename: 'feedback-widget.js',
     },
     devtool: 'source-map',
   },
   {
     ...defaultConfig,
-    entry: './src/components/MicroReactApp.js',
+    entry: './src/components/MicroReactApp.tsx',
     output: {
       path: distDir,
       publicPath: '/',
-      filename: 'ripple-widget.react-example.js',
+      filename: 'micro-react-app.js',
     },
     devtool: 'source-map',
   }

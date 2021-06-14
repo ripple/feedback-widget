@@ -1,108 +1,239 @@
 <div align="center">
-<h1>Embeddable React Widget</h1>
+<h1>Feedback Widget</h1>
 
-Easy creation of embeddable widgets - https://seriousben.github.io/embeddable-react-widget
-
-[![CircleCI](https://circleci.com/gh/seriousben/embeddable-react-widget.svg?style=shield)](https://circleci.com/gh/seriousben/embeddable-react-widget)
-[![codecov](https://codecov.io/gh/seriousben/embeddable-react-widget/branch/master/graph/badge.svg)](https://codecov.io/gh/seriousben/embeddable-react-widget)
-[![Renovate enabled](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://renovatebot.com/)
+Start harvesting user feedback on your web application quickly and easily!
 
 </div>
 
 ## Features
 
-* Full ES6/ES2015 support (with Babel)
-* Package fonts, css, json, javascripts together into one single package (with Webpack)
-* No css styling conflicts between the host page and the widget (with https://github.com/premasagar/cleanslate)
-* Bookmarklet supported for fast testing and demonstration
-* User theming of widget
-* Obfuscating of the widget code
-* Unit Tested with code coverage enabled
-* Continuous Integration ready
+* Out-of-the-Box functionality.
+* Easily connect to Google Analytics to track user feedback.
+* Implement with React or Vanilla JS
+* `Uniforms` gives the developer limitless options for quickly building out complex forms.
+* Multiple popups and forms can be utilized in sequence.
+* Multiple theme styles are ready to go.
+* ESLint enabled.
 
-## Demo
+# Install
 
-<img width="600px" src="./bookmarklet-flow.gif" />
+After installing and running the app locally you can easily check out different implementations. Check out `/playground` to experiment with different JSON structures and themes in real-time.
 
-## Running the widget
-
-### Install dependencies
+### Install
 
 ```sh
 $ npm install
 ```
 
-### Start the development server
+### Start Dev Server
 
 ```sh
 $ npm start
-... server running at http://localhost:8080/
 ```
 
-### Run tests
-```
-$ npm test
-... test output
-```
+### Production Build
 
-### Production build
-```
+```sh
 $ npm run build
 ... create files in /dist
 ```
 
-## Roadmap
+# Options
 
-- [x] Widget as react app - index.html works (webpack, babel, react)
-- [x] React widget (widget builder)
-- [x] Webpack changed to output a library
-- [x] Add tests
-- [x] Add circleci integration
-- [x] Add codecov integration for codecoverage
-- [x] Production Build
-- [x] Minified
-- [x] Add greenkeeper
-- [x] Bookmarklet
-- [x] Reset / Cleanslate / No-conflicts of styles
-- [x] Obfuscation
-- [ ] Theming support
-- [ ] Storyboard and docs
-- [ ] Integrate eslint with webpack
+| Name | Type | Default | Required | Description |
+| ---- | ---- | ------- | -------- | ----------- |
+| analyticsConfig | Array | null | | Optional. Expects an array of objects. `[{ name: 'ga', id: 'UA-111111111-1' }]`
+| analyticsConfig.`name` | String | null | | Only accepts Google Analytics for now. `'ga'`
+| analyticsConfig.`id` | String | null | | Expects the full Google Analytics account ID including the `UA-`.
+| analyticsName | String | feedback-widget | | High-level name that shows up inside of the Google Analytics event.
+| currentPath | String | `window.location.pathname` | | Used to provide Google Analytics with context when tracking events.
+| onSubmit | Function | null | | This custom submit function will fire after the `<Step>` is complete. (but *before* proceeding to the next step.)
+| steps | Array | see below | ✔ | **see below** |
+| theme | String | ripplex | | Can be either `ripplex`, `xrpl`, or `paystring`.
 
-## Background
+# Step Options
 
-### What is an embeddable widget?
+Only two step types are supported right now: `component` for custom React Components and `form` for Uniform autoforms.
 
-* Usable using a simple `<script>` tag
-* Configurable with code
-* Themable
+```js
+options.steps = [
+  { component: MyComponent },
+  { form: ... }
+]
+```
 
-### Why not in an iframe?
+| Name | Type | Default | Required | Description |
+| ---- | ---- | ------- | -------- | ----------- |
+| component | React Component | | | Your custom React Component. See implementation examples below.
+| form | Uniform Object | | |  Your custom Uniform autoform. See implementation examples below. Also check out documentation on building forms with Uniform here: https://uniforms.tools/docs/tutorials-basic-uniforms-usage/
 
-* Interaction between the frame and the hosting page is tricky and not recommended
-* You can only display content within the iframe
-* iframe and content resizing is impossible
-* iframe sandboxing can result in missing functionalities
 
-### Read more
+# Implementation Examples
 
-Read more about about widgets, react and scoping of css.
+After installing and running the app locally you can easily check out different implementations. Check out `/playground` to experiment with different JSON structures and themes in real-time.
 
-* https://www.robinwieruch.de/minimal-react-webpack-babel-setup/#hot-module-replacement
-* https://codeburst.io/building-react-widget-libraries-using-webpack-e0a140c16ce4
-* https://github.com/timarney/react-app-rewired
-* https://github.com/premasagar/cleanslate
-* https://github.com/krasimir/third-party-react-widget
-* https://github.com/jenyayel/js-widget
-* https://github.com/anakinjay/react-widget-starter
-* https://webpack.js.org/guides/author-libraries/
-* https://github.com/webpack-contrib/webpack-serve
-* https://medium.freecodecamp.org/part-1-react-app-from-scratch-using-webpack-4-562b1d231e75
-* https://github.com/facebook/create-react-app/blob/next/packages/react-scripts/config/webpack.config.prod.js
-* https://github.com/webpack-contrib/purifycss-webpack
-* https://medium.com/quick-code/from-zero-to-deploy-set-up-react-stack-with-webpack-3-20b57d6cb8d7
-* https://medium.com/dailyjs/building-a-react-component-with-webpack-publish-to-npm-deploy-to-github-guide-6927f60b3220
-* http://krasimirtsonev.com/blog/article/javascript-library-starter-using-webpack-es6
-* https://github.com/javascript-obfuscator/webpack-obfuscator
-* https://github.com/tsileo/embedded-js-widget
-* https://thomassileo.name/blog/2014/03/27/building-an-embeddable-javascript-widget-third-party-javascript/
+**Please note: The vanilla implementation is lacking practical features. We recommend that each step be a *form* or *component* for now.**
+
+## Vanilla JS
+
+```js
+// Options
+const options = {
+  analyticsConfig: [
+    { name: 'ga', id: 'UA-136717602-1' },
+    { name: 'gtm', id: 'GTM-THHW334' },
+  ],
+  analyticsName: 'Feedback Widget Tracker',
+  theme: 'xrpl',
+  steps: [{
+    someArbitraryKey: 'Some arbitrary value.'
+  }]
+};
+
+// Init
+const r = new WidgetClass(options);
+```
+
+## Uniforms
+
+Uniforms Docs: https://uniforms.tools/docs/tutorials-basic-uniforms-usage/
+
+```js
+// Options
+const options = {
+  theme: 'xrpl',
+  analyticsConfig: [{ name: 'ga', id: 'UA-111111111-1' }],
+  onSubmit: (stepProps) => console.log('Custom onSubmit.'),
+  steps: [
+    {
+      form: {
+        type: 'object',
+        properties: {
+          firstName: { type: 'string' },
+          lastName: { type: 'string' },
+          workExperience: {
+            description: 'Work experience in years',
+            type: 'integer',
+            minimum: 0,
+            maximum: 100,
+          },
+        },
+        required: ['firstName'],
+      }
+    },
+    {
+      form: {
+        type: 'object',
+        properties: {
+          message: { type: 'string' },
+        },
+        required: ['message'],
+      }
+    }
+  ]
+};
+
+// Init
+const r = new WidgetClass(options);
+```
+
+## React
+
+```js
+// Custom Components
+function myCustomStepOne() { return <>1. I am a custom React component</> }
+function myCustomStepTwo() { return <>2. I am also a custom React component</> }
+
+// Options
+const analytics = [{ name: 'ga', id: 'UA-111111111-1' }];
+const steps = [
+  { component: myCustomStepOne },
+  { component: myCustomStepTwo },
+];
+```
+
+```js
+// Embed
+<Widget analyticsConfig={analytics} steps={steps} />
+```
+
+Custom React components require additional work to manually program sequence events. React Components will automatically inherit all possible `Step` methods through the props argument. See `react-step-builder` package for additional details.
+
+|   Property  |    Type     |     Desc    |
+| ----------- | ----------- | ----------- |
+|  hasNext()  |   Function  | Returns `true` if there is another `<Step>` in the sequence. |
+|  hasPrev()  |   Function  | Returns `true` if there is a previous `<Step>` in the sequence. |
+|  isFirst()  |   Function  | Returns `true` if the current `<Step>` is the first one in the sequence. |
+|  isLast()  |   Function  | Returns `true` if the current `<Step>` is the last one in the sequence. |
+|  jump(step)  |   Function  | Jumps to whatever `<Step>` is passed as an argument. (step: `INT`) |
+|  next()  |   Function  | Go to next sequence. |
+|  prev()  |   Function  | Go to previous sequence. |
+|  size  |   Number  | Total number of `<Step>`s in the sequence. |
+|  stepData  |   React Component  | The React Component for this step. |
+
+
+```js
+//
+// Your custom React Component will access the above
+// methods through props as long as the Component is
+// being assigned as a step.
+//
+// {
+//  ...
+//  steps: [ { component: myCustomStepOne } ],
+//  ...
+// }
+//
+function myCustomStepOne(props) {
+  return (
+    <>
+      <p>I am a paragraph. When you are ready, click the next button.</p>
+      <button onClick={ props.next() }>Next</button>
+    </>
+  )
+}
+```
+
+## Combine React + Uniforms
+```js
+const options = {
+  steps: [
+
+    // Step One
+    { component: myCustomStepOne },
+
+    // Step Two
+    {
+      form: {
+        type: 'object',
+        properties: {
+          firstName: { type: 'string' }
+          lastName: { type: 'string' }
+          age: { type: 'integer' }
+        }
+      }
+    }
+  ]
+}
+```
+
+# Configure Google Analytics (optional)
+
+When instantiating the `FeedbackWidget` simply pass in your Google Analytics ID to start tracking feedback:
+
+```js
+const options = {
+  analyticsConfig: [{
+    name: 'ga',
+    id: 'UA-111111111-1'
+  }]
+};
+
+const r = new WidgetClass(options);
+```
+
+# Libraries & Third Parties
+
+* React
+* Uniforms
+* Step, Steps (`react-step-builder` package)

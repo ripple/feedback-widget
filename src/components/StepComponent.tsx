@@ -7,10 +7,21 @@ import WidgetClass from '../classes/WidgetClass';
 // ########################## //
 //                            //
 //                            //
-//  Step Interface
+//  Step Component Types
 //                            //
 //                            //
 // ########################## //
+type StepComponentProps = {
+  analytics: any,
+  current: any,
+  handleClose: any,
+  isLast: any,
+  next: any,
+  onSubmit: any,
+  stepData: any
+  setIsOpen: boolean,
+  setOpenAnimation: boolean
+}
 
 // ########################## //
 //                            //
@@ -20,10 +31,10 @@ import WidgetClass from '../classes/WidgetClass';
 //                            //
 // ########################## //
 const StepComponent = ({
-  setOpenAnimation,
   setIsOpen,
+  setOpenAnimation,
   ...props
-}) => {
+} : StepComponentProps) => {
   // -------------------------- //
   //  Vars
   // -------------------------- //
@@ -35,7 +46,7 @@ const StepComponent = ({
   //  Error Check
   // -------------------------- //
   if (!stepData) {
-    throw new Error('Step data is required for every step. <StepComponent> props: ', props);
+    throw new Error('Step data is required for every step.');
   }
 
   // --------------------------------- //
@@ -79,7 +90,10 @@ const StepComponent = ({
 
   // #3. Else: Insufficient data provided in initial 'steps'
   return (
-    <h1>Missing Step Data</h1>
+    <>
+      <h1>Missing Step Data</h1>
+      <p>See documentation for custom Components and Autoforms.</p>
+    </>
   );
 };
 

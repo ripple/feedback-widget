@@ -1,7 +1,7 @@
 {
-  "name": "ripple-widget",
-  "version": "0.0.2",
-  "description": "A themeable and customizable embeddable widget by Ripple.",
+  "name": "feedback-widget",
+  "version": "1.0.0",
+  "description": "A themeable and embeddable widget for receiving user feedback.",
   "main": "index.js",
   "scripts": {
     "build": "NODE_ENV=production webpack-cli --mode production",

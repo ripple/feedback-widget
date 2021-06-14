@@ -1,13 +1,14 @@
 const defaultWidgetProps = {
-  theme: 'ripplex',
-  opened: true,
-  currentPath: window.location.pathname,
-  mounted: false,
   analytics: null,
   analyticsConfig: null,
-  analyticsName: 'ripple-widget',
+  analyticsName: 'feedback-widget',
+  currentPath: window.location.pathname,
+  onSubmit: null,
+  steps: [],
+  theme: 'ripplex',
+  themeValues: {
+    container: null
+  },
 };
-
-// parentElement: '#root',
 
 export default defaultWidgetProps;
