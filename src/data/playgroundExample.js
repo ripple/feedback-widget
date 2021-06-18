@@ -6,7 +6,7 @@
 //  See: /public/playground.html for entry point
 //
 // =============================================== //
-const playgroundExampleJSON = [
+const playgroundExample = [
   {
     form: {
       type: 'object',
@@ -17,8 +17,8 @@ const playgroundExampleJSON = [
           description: 'When was the book published?',
           type: 'integer',
           minimum: 0,
-          maximum: 2021
-        }
+          maximum: 2021,
+        },
       },
       required: ['bookTitle'],
     },
@@ -35,4 +35,4 @@ const playgroundExampleJSON = [
   },
 ];
 
-export default playgroundExampleJSON;
+export default playgroundExample;

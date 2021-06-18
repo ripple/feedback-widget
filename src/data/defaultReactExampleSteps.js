@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ExampleComponent = () => <h1>Example Component</h1>
+const ExampleComponent = () => <h1>Example Component</h1>;
 
 // ----- Example Steps ----- //
 const defaultReactExampleSteps = [

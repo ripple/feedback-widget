@@ -80,7 +80,7 @@ After installing and running the app locally you can easily check out different 
 // Options
 const options = {
   analyticsConfig: [
-    { name: 'ga', id: 'UA-136717602-1' },
+    { name: 'ga', id: 'UA-111111111-1' },
     { name: 'gtm', id: 'GTM-THHW334' },
   ],
   analyticsName: 'Feedback Widget Tracker',
@@ -237,3 +237,11 @@ const r = new WidgetClass(options);
 * React
 * Uniforms
 * Step, Steps (`react-step-builder` package)
+
+# Roadmap
+
+* Integrate Google Tag Manager and other analytic tracking.
+* Develop custom vanilla js implementation beyond `Autoform` and `React Components`.
+
+# License
+This project is licensed under the terms of the MIT license. See `LICENSE.txt`

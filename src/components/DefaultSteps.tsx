@@ -43,8 +43,8 @@ const DefaultStepOne = (props) => {
     <div className="widget-helpful form-group">
       <div style={themeValues.step1header} className="widget-header">
         <div className="widget-header-title">Was this page helpful?</div>
-        <button type="button" style={themeValues.yesIcon} className="widget-header-icon icon-yes" onClick={(e) => clickYes(e)}> </button>
-        <button type="button" style={themeValues.noIcon} className="widget-header-icon icon-no" onClick={(e) => clickNo(e)}> </button>
+        <button type="button" style={themeValues.yesIcon} className="widget-header-icon icon-yes" onClick={() => clickYes()}> </button>
+        <button type="button" style={themeValues.noIcon} className="widget-header-icon icon-no" onClick={() => clickNo()}> </button>
       </div>
     </div>
   );

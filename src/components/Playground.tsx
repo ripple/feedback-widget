@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Widget } from './WidgetComponent';
-import playgroundExampleJSON from '../data/playgroundExampleJSON';
+import playgroundExample from '../data/playgroundExample';
 
 // =============================================== //
 //
@@ -14,7 +14,7 @@ const Playground = (props) => {
   const [ready, setReady] = useState(false)
   const [themeName, setThemeName] = useState(props.theme)
   const [textValue, setTextValue] = useState('');
-  const [textareaJson, setTextareaJson] = useState(playgroundExampleJSON);
+  const [textareaJson, setTextareaJson] = useState(playgroundExample);
 
   // ------------------------------ //
   //  Events
@@ -38,7 +38,7 @@ const Playground = (props) => {
   // - - - - - - - - - - - - - - - - //
   const init = function init() {
     if (!textValue || textValue === '' || textValue === 'textArea') {
-      setTextValue(JSON.stringify(playgroundExampleJSON, null, 2));
+      setTextValue(JSON.stringify(playgroundExample, null, 2));
     }
     setReady(true);
   }

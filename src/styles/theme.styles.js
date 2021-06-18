@@ -247,10 +247,10 @@ export default {
           bottom: 36,
         },
         yesIcon: {
-          backgroundImage: 'url(https://docforcedevorg.github.io/ripple-feedback-widget/review-apps/Merge210in/2ec120/assets/thumb.svg)',
+          backgroundImage: 'url(/assets/thumb.svg)',
         },
         noIcon: {
-          backgroundImage: 'url(https://docforcedevorg.github.io/ripple-feedback-widget/review-apps/Merge210in/2ec120/assets/thumb.svg)',
+          backgroundImage: 'url(/assets/thumb.svg)',
         },
         step1header: {
           color: '#000000',

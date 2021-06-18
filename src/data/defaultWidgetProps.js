@@ -7,7 +7,7 @@ const defaultWidgetProps = {
   steps: [],
   theme: 'ripplex',
   themeValues: {
-    container: null
+    container: null,
   },
 };
 

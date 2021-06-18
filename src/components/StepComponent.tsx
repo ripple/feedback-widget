@@ -50,14 +50,14 @@ const StepComponent = ({
   }
 
   // --------------------------------- //
-  //  Return Component or Autoform
+  //  Return Component or Uniform
   // --------------------------------- //
   // #1. If component is passed for the step, just return it as React Component
   if (component) {
     return <>{React.createElement(component, props)}</>;
   }
 
-  // #2. Else if a SimpleSchema form is passed, format and return it
+  // #2. Else if a Uniform form is passed, format and return it
   if (form) {
     const validatedSchema = schemaValidator(form);
     return (
@@ -88,11 +88,11 @@ const StepComponent = ({
     );
   }
 
-  // #3. Else: Insufficient data provided in initial 'steps'
+  // #3. Else: Vanilla JS
   return (
     <>
-      <h1>Missing Step Data</h1>
-      <p>See documentation for custom Components and Autoforms.</p>
+      <h1>Under Development</h1>
+      <p>Please use React Components or Uniform only. (for now) Check the README.md file for other implementations.</p>
     </>
   );
 };
