@@ -3,7 +3,8 @@ import { Steps, Step } from 'react-step-builder';
 import config from '../styles/theme.styles';
 import StepComponent from './StepComponent';
 import defaultWidgetProps from '../data/defaultWidgetProps';
-import { DefaultStepOne, DefaultStepTwo } from './DefaultSteps';
+import DefaultStepOne from './DefaultStep1';
+import DefaultStepTwo from './DefaultStep2';
 import WidgetClass from '../classes/WidgetClass';
 import '../styles/widget.scss';
 
@@ -39,6 +40,7 @@ const Widget = (widgetProps : WidgetProps) => {
   //  Events
   // ===================== //
   const clickOnClose = () => {
+    console.log('Close Feedback Widget.');
     setOpenAnimation('exiting');
     setIsOpen(false);
   };
@@ -47,13 +49,6 @@ const Widget = (widgetProps : WidgetProps) => {
   //  fn: Init
   // - - - - - - - - - - - - - - - - //
   const init = function init() {
-    
-    // TODO: NEAL THIS PROBABLY IS IRRELEVANT NOW. but double check...
-    // setProps((prevState) => {
-    //   const newState = prevState;
-    //   newState.themeValues = themeValues;
-    //   return newState;
-    // });
 
     // ----- Insert Default Step ----- //
     if (!props.steps || props.steps.length <= 0) {

@@ -1,6 +1,7 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const increaseSpecificity = require('postcss-increase-specificity');
 const CopyPlugin = require('copy-webpack-plugin');
+const BrotliPlugin = require('brotli-webpack-plugin');
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 const path = require('path');
@@ -23,8 +24,20 @@ const defaultConfig = {
       filename: devMode ? '[name].css' : '[name].[hash].css',
       chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
     }),
-    new CopyPlugin([{ from: 'public', to: '.' }]),
-    // devMode ? null : new JavaScriptObfuscator(),
+    //new CopyPlugin([{ from: 'public', to: '.' }]),
+    new CopyPlugin({
+      patterns: [{ from: 'public', to: '.' }]
+    }),
+
+    // Creates a .br compressed version of each file output
+    // including 'feedback-widget.js.br' and 'micro-react-app.js.br'
+    new BrotliPlugin({
+			asset: '[path].br[query]',
+			test: /\.(js|css|html|svg)$/,
+			threshold: 10240,
+			minRatio: 0.8
+		})
+
   ].filter((i) => i),
   module: {
     rules: [
@@ -129,7 +142,9 @@ module.exports = [
       publicPath: '/',
       filename: 'feedback-widget.js',
     },
-    devtool: 'source-map',
+    //devtool: 'source-map',
+    //devtool: null,
+    devServer: { port: 9001 },
   },
   {
     ...defaultConfig,
@@ -139,6 +154,7 @@ module.exports = [
       publicPath: '/',
       filename: 'micro-react-app.js',
     },
-    devtool: 'source-map',
+    //devtool: null,
+    //devtool: 'source-map',
   }
 ];

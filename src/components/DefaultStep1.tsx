@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { FC } from 'react';
 import WidgetClass from '../classes/WidgetClass';
 
 // ########################## //
 //                            //
 //                            //
 //  Default Step One
+//  "Was this page helpful?"
 //                            //
 //                            //
 // ########################## //
-const DefaultStepOne = (props) => {
+const DefaultStepOne : FC = ( props:any ) => {
   // -------------------------- //
   //  Vars
   // -------------------------- //
@@ -50,32 +51,4 @@ const DefaultStepOne = (props) => {
   );
 };
 
-// ########################## //
-//                            //
-//                            //
-//  Default Step Two
-//                            //
-//                            //
-// ########################## //
-const DefaultStepTwo = (props) => {
-  // -------------------------- //
-  //  Vars
-  // -------------------------- //
-  const { themeValues } = props;
-
-  // -------------------------- //
-  //  JSX
-  // -------------------------- //
-  return (
-    <div className="widget-helpful form-group">
-      <div style={themeValues.step1header} className="widget-header">
-        <div className="widget-header-title">Thank you for your feedback!</div>
-      </div>
-    </div>
-  );
-};
-
-export {
-  DefaultStepOne,
-  DefaultStepTwo,
-};
+export default DefaultStepOne;

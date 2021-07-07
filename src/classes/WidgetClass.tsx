@@ -79,7 +79,6 @@ import defaultWidgetProps from '../data/defaultWidgetProps';
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     let el = (document.getElementById('root') as HTMLElement)
     const parentElement = this.props.parentElement
-
     if (parentElement) {
       const selector = (document.querySelector(parentElement) as HTMLElement)
       if (!selector) {
@@ -88,6 +87,8 @@ import defaultWidgetProps from '../data/defaultWidgetProps';
       else if (selector && el) {
         el = selector
       }
+    } else if (!parentElement && !el) {
+      el = document.getElementsByTagName('body')[0]
     }
 
     // Render React <Widget />
