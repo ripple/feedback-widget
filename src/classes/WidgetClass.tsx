@@ -77,8 +77,10 @@ import defaultWidgetProps from '../data/defaultWidgetProps';
     // Default to '#root' but can be overwritten by 'parentElement' prop.
     // TODO: Test the parentElement implementation on a page with lots of HTML.
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    let el = (document.getElementById('root') as HTMLElement)
+    // let el = (document.getElementById('root') as HTMLElement)
+    let el = (document.createElement('div') as HTMLElement);
     const parentElement = this.props.parentElement
+
     if (parentElement) {
       const selector = (document.querySelector(parentElement) as HTMLElement)
       if (!selector) {
@@ -134,6 +136,7 @@ import defaultWidgetProps from '../data/defaultWidgetProps';
       category: path,
       label: eventValue
     })
+    // console.log(`%cTracking event: ${eventName} : ${eventValue} and Path: ${path}`, 'color:red;');
   }
 
 }

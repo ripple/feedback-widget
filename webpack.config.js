@@ -142,7 +142,7 @@ module.exports = [
       publicPath: '/',
       filename: 'feedback-widget.js',
     },
-    //devtool: 'source-map',
+    devtool: 'source-map',
     //devtool: null,
     devServer: { port: 9001 },
   },
@@ -155,6 +155,6 @@ module.exports = [
       filename: 'micro-react-app.js',
     },
     //devtool: null,
-    //devtool: 'source-map',
+    devtool: 'source-map',
   }
 ];

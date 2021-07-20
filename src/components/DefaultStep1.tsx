@@ -26,7 +26,6 @@ const DefaultStepOne : FC = ( props:any ) => {
       const eventName = 'Step 1: Was page helpful?';
       const eventValue = yesNo;
       WidgetClass.track(props.analytics, eventName, eventValue);
-      console.log(`%cTracking event: ${eventName} : ${eventValue}`, 'color:yellow;');
     }
     props.next();
   };

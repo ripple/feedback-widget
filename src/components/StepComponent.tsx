@@ -76,7 +76,6 @@ const StepComponent = ({
               const eventName = `Step ${props.current}: ${key}`;
               const eventValue = JSON.stringify(value);
               WidgetClass.track(props.analytics, eventName, eventValue);
-              console.log(`%cTracking event: ${eventName} : ${eventValue}`, 'color:yellow;');
             });
           }
 

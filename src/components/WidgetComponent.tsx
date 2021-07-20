@@ -4,6 +4,7 @@ import config from '../styles/theme.styles';
 import StepComponent from './StepComponent';
 import defaultWidgetProps from '../data/defaultWidgetProps';
 import DefaultStepOne from './DefaultStep1';
+import DefaultStepOneB from './DefaultStep1b';
 import DefaultStepTwo from './DefaultStep2';
 import WidgetClass from '../classes/WidgetClass';
 import '../styles/widget.scss';
@@ -34,7 +35,9 @@ const Widget = (widgetProps : WidgetProps) => {
   const [isOpen, setIsOpen] = useState(true);
   const [openAnimation, setOpenAnimation] = useState('entering');
   const [themeName, setThemeName] = useState(widgetProps?.theme);
-  const [themeValues, setThemeValues] = useState(config.themes[themeName].styles)
+  const [themeValues, setThemeValues] = useState(config.themes[themeName].styles);
+  const [themeLabels, setThemeLabels] = useState(config.labels.en);
+
 
   // ===================== //
   //  Events
@@ -54,8 +57,10 @@ const Widget = (widgetProps : WidgetProps) => {
     if (!props.steps || props.steps.length <= 0) {
       const defaultSteps = [
         { component: DefaultStepOne },
+        { component: DefaultStepOneB },
         { component: DefaultStepTwo },
       ];
+      //TODO: this doesnt accept compoents from js. Only as React
 
       setProps((prevState) => {
         const newState = prevState;
@@ -79,6 +84,7 @@ const Widget = (widgetProps : WidgetProps) => {
   const updateTheme = function updateTheme() {
     setThemeName(widgetProps.theme);
     setThemeValues(config.themes[widgetProps.theme].styles);
+    setThemeLabels(config.labels.en);
   }
 
   // ===================== //
@@ -111,9 +117,10 @@ const Widget = (widgetProps : WidgetProps) => {
                       component={StepComponent as FC}
                       stepData={step}
                       themeValues={themeValues}
+                      themeLabels={themeLabels}
                       onSubmit={props.onSubmit}
                       handleClose={clickOnClose}
-                      currentPath={props.currentPath}
+                      currentPath={props.currentPath} //TODO: this is not being passed to the final track
                       analytics={(analytics) ? analytics : null}
                     />
                   );

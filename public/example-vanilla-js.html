@@ -5,8 +5,9 @@
   </head>
   <script src="./feedback-widget.js"></script>
   <body>
-    <div id="root"></div>
-
+    <div id="Widget">
+    <div id="feedback-widget"></div>
+  </div>
     <script>
       
       // Options
@@ -17,9 +18,7 @@
         ],
         analyticsName: 'Feedback Widget Tracker',
         theme: 'xrpl',
-        steps: [{
-          someArbitraryKey: 'Some arbitrary value.'
-        }]
+        parentElement: '#feedback-widget',
       };
 
       // Init WidgetClass
