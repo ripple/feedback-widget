@@ -113,7 +113,11 @@ import defaultWidgetProps from '../data/defaultWidgetProps';
           plugins.push(googleAnalytics({ trackingId: source.id }))
           break;
         case 'gtm':
-          plugins.push(googleTagManager({ containerId: source.id }))
+          const plugin = googleTagManager({ containerId: source.id, dataLayer: window.dataLayer })
+          plugin.loaded = () => {
+              return !!window.dataLayer && !!window.dataLayer.push
+          }
+          plugins.push(plugin)
           break;
       }
     })
@@ -146,7 +150,8 @@ import defaultWidgetProps from '../data/defaultWidgetProps';
 // ------------------------------ //
 declare global {
   interface Window {
-    WidgetClass: any
+    WidgetClass: any,
+    dataLayer: any[]
   }
 }
 window.WidgetClass = WidgetClass
